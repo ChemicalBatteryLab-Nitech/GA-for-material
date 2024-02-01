@@ -118,7 +118,7 @@
     上位1位から5位を抽出しそれぞれディレクトリを作成する。
 &nbsp;  
 * calc_energy.py -gene2pos   
-    temp_gene, POSCA_orgがあるディレクトリで実行すると、temp_geneの中にある遺伝子を読み取ってPOSCARを作成する。
+    temp_gene, POSCA_org, inp_POSCAR.pyがあるディレクトリで実行すると、temp_geneの中にある遺伝子を読み取ってPOSCARを作成する。
     Save_infoやout.value_indivに遺伝子配列は保存されています。 
   
 &nbsp;      

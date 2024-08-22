@@ -26,7 +26,6 @@ pwd = os.getcwd()
 mode select
 
 """
-select_mode = "ranking" #tournament, roulet, ranking
 print_generate_status = True
 calc_loop = 2
 
@@ -49,6 +48,7 @@ try:
 except:
     RESTART = False
 ELEMENT_FIX = inp_ga.ELEMENT_FIX
+select_mode = inp_ga.select_mode
 tmp_gene = inp_ga.temp_gene
 njob = inp_ga.njob
 eval_file = inp_ga.eval_file

@@ -2,7 +2,9 @@
 
 Authors: Yumika YOKOYAMA, Tsubasa KOYAMA, Masanobu NAKAYAMA (Nagoya Institute of Technology)
 
-※ This manual corresponds to versions prior to 2025/2/13.
+## Change log
+Aug. 2024   First edition by Yumika YOKOYAMA (v1.0.0) <br>
+Feb. 2025   Add GAML feature by Tsubasa KOYAMA and Yumika YOKOYAMA (v2.0.0) <br>
 
 ## Purpose
 A program designed to optimize the atomic arrangement for partially substituted sites in given host structure, mainly for inorganic crystalline materials. In defective or nonstoichiometric compounds, the stability of the system can vary depending on the arrangement of atoms or defects. This program uses a genetic algorithm to search for the most stable arrangement by reducing the total energy of the system. Additionally, it can be applied to systems beyond crystalline inorganic solid materials if appropriate input is provided. Moreover, the target properties for optimization can include factors other than the system's energy.   
@@ -137,8 +139,11 @@ GAML consists of six steps, including the four previously mentioned steps and th
     for optimization of element arrangement  
 &nbsp;  
 * $python GmAte.py -bestgene out.value_indiv (Arg1) (Arg2)  
-    After the GA optiization is completed, extract GA selected POSCAR files from the top (Arg1)th to (Arg2)th and save POSCAR files in a directory for each
-&nbsp;
+    After the GA optiization is completed, extract GA selected POSCAR files from the top (Arg1)th to (Arg2)th and save POSCAR files in a directory for each   
+&nbsp;   
+* $python GmAte.py -gene2pos (Arg1) (Arg2)     
+    POSCAR is created from the gene by reading the (Arg2) gene information file in the directory specified by (Arg1).    
+&nbsp;   
 * $python calc_energy.py -gene2pos   
     When executed in a directory containing temp_gene, POSCAR_org, and inp_POSCAR.py, the program reads the chromosomes from temp_gene (inp.params formatted) and generates POSCAR files.
     The chromosome sequences are saved in Save_info and out.value_indiv. 

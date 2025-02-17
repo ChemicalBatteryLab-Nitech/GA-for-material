@@ -11,9 +11,9 @@ from ase.io import read, write
 from ase.io import Trajectory
 from ase.constraints import FixAtoms, FixedPlane, FixBondLength, UnitCellFilter, ExpCellFilter
 from ase.optimize import LBFGS, BFGS, FIRE
-
 from ase import Atoms
 from ase import units
+
 
 from m3gnet.models import M3GNet, M3GNetCalculator, Potential
 from m3gnet.models import Relaxer
@@ -60,6 +60,7 @@ def main(input):
     fl=open ("log.m3g_input",'r')
     for flc in fl:
         print ("  ",flc.strip())
+
     try:
         os.system(f"rm {outallenergy}")
     except:
@@ -112,6 +113,7 @@ def main(input):
             opt = BFGS(ucf, trajectory="relax.traj",logfile=outallenergy)
         elif algo=="FIRE":
             opt = FIRE(ucf, trajectory="relax.traj",logfile=outallenergy)
+
         opt.run(fmax=infmax,steps=maxstep)
 
         if isif == 3:

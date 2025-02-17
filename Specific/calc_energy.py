@@ -15,7 +15,7 @@ cri_time = 30*60
 
 
 if runtype == "m3g":
-    calccode = "m3g.py -instruct=POSCAR -algo=FIRE 2>errorlog.m3g >log.m3g &"
+    calccode = "m3g.py instruct=POSCAR algo=FIRE 2>errorlog.m3g >log.m3g &"
     energy_file = "energy"
 elif runtype == "m.py":
     calccode = "m.py -instruct=POSCAR"
@@ -95,6 +95,8 @@ def calc_score():
     else:
         os.system("rm CHG* WAV* IBZ* finish 2>err")
         os.system(vasp_code)
+        os.system('vaspfiles -getenergy OUTCAR')
+        #os.system('cp energy out.energy')
         os.system("tail OSZICAR -n1 > oszitail")
         with open("oszitail", "r") as f:
             E0 = f.readline().split()[4]
@@ -108,6 +110,7 @@ def calc_score():
             print("calc finish")
             make_savefiles()
             os.system(f"mv {cpwd}/running {cpwd}/finish")
+            os.system('vaspfiles -getenergy OUTCAR')
             break
         elif time.time() - start_time > cri_time:
             score = 0
@@ -122,6 +125,7 @@ def calc_score():
             with open(f"{cpwd}/{energy_file}", "w") as w:
                 w.write(f"{str(score)}\n")
             make_savefiles()
+            os.system('vaspfiles -getenergy OUTCAR')
             os.system(f"rm {cpwd}/running")
             os.system(f"touch {cpwd}/finish")
             break

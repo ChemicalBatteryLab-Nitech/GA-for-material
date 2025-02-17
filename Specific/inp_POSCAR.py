@@ -1,6 +1,6 @@
-runtype = "m3g" #for static: m3g-static
-ions = [["La", "Sr", "Co", "Fe", "O"]]
-ELEM = [["La", "Sr"], ["Co", "Fe"]]
-savefiles = ["POSCAR", "CONTCAR", "temp_gene"]
+runtype = "m3g"
+ions = [["Li", "Al", "O"]]
+ELEM = [["Li", "Al"]]
+savefiles = ["POSCAR", "CONTCAR", "log.m3g", "temp_gene"]
 output = "energy"
-thread = True #import Specific/optm3g.py
+thread = True

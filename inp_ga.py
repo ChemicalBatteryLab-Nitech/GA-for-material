@@ -32,6 +32,8 @@ STOP_CRITERIA = 900 #Stop condition when best does not change continuously
 RESTART = True #if you want to restart =True
 ELEMENT_FIX = True #if you want to fix the num of elements =True
 
+select_mode = "ranking" #tournament, roulet, ranking
+
 temp_gene = "temp_gene" #name of the temp gene file
 eval_file = "energy"
 ncore = 6

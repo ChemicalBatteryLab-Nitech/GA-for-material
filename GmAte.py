@@ -924,6 +924,60 @@ def get_last_data():
     return generation, generation_index, saved_count, all_gen, last_time_data
             
 
+def gene_2_pos(dirp, gene_file, ref_poscar):
+    temp_gene_path = f"{dirp}/{gene_file}"
+    with open(f"{temp_gene_path}", "r") as f:
+        strings = f.read().splitlines()
+    with open(ref_poscar, "r") as f:
+        all_lines = f.readlines()
+    all_lines = [i.split() for i in all_lines]
+    labels, lines = all_lines[:8], all_lines[8:]
+    if "Direct" not in labels[-1] and "Cart" not in labels[-1]:
+            print("Warning : POSCAR_org must be in VASP5 format.　A label with the name of the atom is required on line 6.")
+            sys.exit()
+
+    new_labels = labels.copy()
+    label_info = []
+    # print(labels[5])
+    for i in range(len(labels[5])):
+        if "ELEM" in labels[5][i]:
+            flag = labels[5][i].lstrip("ELEM")
+            if flag == "":
+                flag = 1
+            else:
+                flag = int(flag)
+            for xx, x in enumerate(ELEM[flag-1]):
+                count = str(str(strings[flag-1]).count(str(xx)))
+                if x != "Vac":
+                    label_info.append([x, count])
+        else:
+            label_info.append([labels[5][i], labels[6][i]])
+    label_info_sort = sorted(label_info, key=lambda x: str(x[0]))
+    new_labels[5] = [i[0] for i in label_info_sort]
+    new_labels[6] = [i[1] for i in label_info_sort]
+
+    count_list = [0 for _ in range(len(strings))]
+    for line in lines:
+        if "ELEM" in line[3]:
+            flag = line[3].lstrip("ELEM")
+            if flag == "":
+                flag = 1
+            else:
+                flag = int(flag)
+            gen = int(strings[flag-1][count_list[flag-1]])
+            count_list[flag-1] += 1
+            line[3] = ELEM[flag-1][gen]
+        else:
+            pass
+    lines_sort = sorted(lines, key= lambda x: str(x[3]))
+
+    with open(f"{dirp}/POSCAR", "w") as w:
+        for i in new_labels:
+            w.write(" ".join(i) + "\n")
+        for i in lines_sort:
+            if "Vac" not in i:
+                w.write(" ".join(i) + "\n")            
+
 """
 Perform Genetic Algorithms
 
@@ -958,6 +1012,9 @@ if __name__ == "__main__":
             generation = create_first_generation(POPULATION, genoms)      
         else:       
             #Read the last generation information from the output file
+            if os.path.isfile(value_file)==False:
+                print(f"Error: no value file ({value_file}) RESTART={RESTART}")
+                sys.exit()
             generation, generation_index, saved_count, all_gen, last_time_data = get_last_data()
             total_time = last_time_data
             for i in range(1, inp_ga.POPULATION+1):
@@ -988,8 +1045,22 @@ if __name__ == "__main__":
             new_dir = f"{pwd}/best_rank{str(i)}_gen{str(indiv[0])}_indiv{str(indiv[-1])}"
             os.system(f"mkdir {new_dir}")
             os.system(f"cp {pwd}/sample{str(indiv[-1]).zfill(3)}/Save*_{str(indiv[0])} {new_dir}")
-
+            gene_file = f"Save_temp_gene_{str(indiv[0])}"
+            ref_poscar = "./Specific/POSCAR_org"
+            try:
+                gene_2_pos(new_dir, gene_file, ref_poscar)
+            except:
+                pass
+        
+    elif mode == "-gene2pos":
+        if len(sys.argv) != 4:
+            print(f"USAGE: python {sys.argv[0]} -gene2pos Arg1 Arg2\n  Arg1: directory name\n  Arg2: gene file\n")
+            sys.exit()
+        dirp = sys.argv[2]
+        gene_file = sys.argv[3]
+        ref_poscar = "./Specific/POSCAR_org"
+        gene_2_pos(dirp, gene_file, ref_poscar)
+        
     else:
         print(f"{sys.argv[1]} is not defined")
-        print(f"USAGE: {sys.argv[0]} -mode\n ----mode----\n  -ga: run the genetic algorithm\n  -bestgene: get the best gene and create new directory\n")
-
+        print(f"USAGE: {sys.argv[0]} -mode\n ----mode----\n  -ga: run the genetic algorithm\n  -bestgene: get the best gene and create new directory\n  -gene2pos: get the POSCAR from gene\n")

@@ -1,4 +1,4 @@
-# Genetic Algolithm for mAterial (GmAte.py)
+# Genetic Algolithm for mAterial (GmAte_ML.py)
 
 Authors: Yumika YOKOYAMA, Tsubasa KOYAMA, Masanobu NAKAYAMA (Nagoya Institute of Technology)
 

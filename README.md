@@ -2,6 +2,8 @@
 
 Authors: Yumika YOKOYAMA, Tsubasa KOYAMA, Masanobu NAKAYAMA (Nagoya Institute of Technology)
 
+※ This manual corresponds to versions prior to 2025/2/13.
+
 ## Purpose
 A program designed to optimize the atomic arrangement for partially substituted sites in given host structure, mainly for inorganic crystalline materials. In defective or nonstoichiometric compounds, the stability of the system can vary depending on the arrangement of atoms or defects. This program uses a genetic algorithm to search for the most stable arrangement by reducing the total energy of the system. Additionally, it can be applied to systems beyond crystalline inorganic solid materials if appropriate input is provided. Moreover, the target properties for optimization can include factors other than the system's energy.   
 When evaluating inorganic structures with substituted elements, it is crucial to determine which site’s atoms to substitute. In most cases, the most stable structure is used, but the number of possible arrangements often cause a combinatorial explosion, making it nearly impossible to compute all possibilities due to computational costs. This script utilizes the genetic algorithm (GA), an optimization algorithm, to discover the most stable structure with fewer search iterations.
@@ -21,6 +23,13 @@ Thus generated new chromosomes (offsprings) are again evaluated their energies u
 
 Current version include script for evaluation of energies using [M3GNet.py](https://github.com/materialsvirtuallab/m3gnet).
 
+**About GAML**
+Additionally, to address the issue of slow convergence when there are many GA genes, this program can execute "GAML". GAML aims to discover the most stable structure with fewer generations by incorporating machine learning (ML) into the selection process.
+In GAML, all structures generated in past GA generations are converted into descriptors, and ML regression analysis is applied to their energy values obtained from material simulations to create a prediction function. When the prediction accuracy exceeds a user-defined threshold, more individuals than the required number n for the next generation are generated through genetic operations. These excess individuals are then evaluated using ML predictions, and the candidates with higher predicted fitness are selected and combined with the individuals created using the conventional GA method to form the population for the next generation. Furthermore, by updating the prediction function in each generation, the convergence of the GA can be accelerated iteratively.
+
+GAML consists of six steps, including the four previously mentioned steps and the following two additional steps:
+5) Generate multiple genes through crossover and perform prediction using machine learning.
+6) Generate multiple genes through mutation and perform prediction using machine learning.
 
 ![Figure](Figures_e.png)
 
@@ -36,6 +45,9 @@ Current version include script for evaluation of energies using [M3GNet.py](http
     * inp_ga.py  
     * inp.params  
     * prepstrings.py 
+    * SpccificML（Option: Used when mlga=True in inp_ga.py. Required only when executing GAML）
+        ├ make_model.py（Code to create a machine learning model using Random Forest）
+        └ predML.py（Code to perform predictions using a machine learning model）
     
     inp_ga.py, inp.params, POSCAR_org, inp_POSCAR.py are required to edit
 
@@ -84,7 +96,7 @@ Current version include script for evaluation of energies using [M3GNet.py](http
     | select_mode | "ranking" | algorithm which selects suvivors among three options as below.<BR>     (1) ranking: Individuals are sorted by energy stability, and the top ones are selected as survivors.<BR> (2) tournament: A tournament is held, and the winners are selected as survivors. <BR> (3)roulett: Individuals are weighted based on their ranking, and survivors are selected by spinning a roulette. The better the individual, the more likely they are to be selected by the roulette. 
     | temp_gene | "temp_gene" | |
     | eval_file | "energy" | file name that contains evaluation scores |
-    | njob | 1 | Number of palallal jobs for evaluations |
+    | ncore | 8 | The number of relaxation calculations executed concurrently |
 
 
 
@@ -106,7 +118,8 @@ Current version include script for evaluation of energies using [M3GNet.py](http
       runtype = "vasp"  
       thread = False  
   - Prepare following VASP input files in "Specific" folder  
-      KPOINTS, INCAR, POTCAR  
+      KPOINTS, INCAR, POTCAR
+      If POSCAR is required for POTCAR creation, you can create the POSCAR by copying inp.params to temp_gene and running 「./calc_energy.py -gene2pos」
 
 * by M3GNet   (https://github.com/materialsvirtuallab/m3gnet )
   - Set tags in inp_POSCAR.py as below  
@@ -125,7 +138,21 @@ Current version include script for evaluation of energies using [M3GNet.py](http
     When executed in a directory containing temp_gene, POSCAR_org, and inp_POSCAR.py, the program reads the chromosomes from temp_gene (inp.params formatted) and generates POSCAR files.
     The chromosome sequences are saved in Save_info and out.value_indiv. 
 &nbsp;      
-    
+
+##　Selection Method for Surviving Individuals
+The selection method for surviving individuals can be specified around line 38 in GmAte_ML.py.
+select_mode = "ranking"
+
+* Ranking Selection (ranking)
+    The same selection method as gstring. Individuals are ranked in order of energy stability, and the top individuals are selected for survival.
+
+* Tournament Selection (tournament)
+    A tournament is conducted, and the winners are selected as surviving individuals.
+
+* Roulette Selection (roulett)
+    Weights are assigned based on fitness, and a roulette wheel is spun to select surviving individuals. More fit individuals have a higher probability of being chosen.
+&nbsp;   
+
 ## About an example folder   
 * LSCF_M3GNet  
    This refers to the optimization of the (La, Sr) sites and (Co, Fe) sites in La38Sr26Co13Fe51O192.  
@@ -142,7 +169,14 @@ Current version include script for evaluation of energies using [M3GNet.py](http
    This refers to the optimization of the cation sites in LiAlO2.  
    Calculations are performed using M3GNet with Specific/optm3g.py.  
    The computation is faster because the import process is done only once.
-     
+&nbsp;
+* LiCoO2_GAML
+    Optimization of cation sites in LiCoO2 using GAML.
+    Some genes are introduced through machine learning predictions using Random Forest.
+&nbsp;
+* LaSrGa3O7_GAML
+    Optimization of La/Sr sites in La1.5Sr0.5Ga3O7.25 using GAML.
+    Some genes are introduced through machine learning predictions using Random Forest.
 
 ## License, Citing
 **About License**  

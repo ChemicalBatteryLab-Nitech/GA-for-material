@@ -50,7 +50,7 @@ except:
 ELEMENT_FIX = inp_ga.ELEMENT_FIX
 select_mode = inp_ga.select_mode
 tmp_gene = inp_ga.temp_gene
-njob = inp_ga.njob
+njob = inp_ga.ncore
 eval_file = inp_ga.eval_file
 duplicate_crit = 200
 ELEM = inp_POSCAR.ELEM

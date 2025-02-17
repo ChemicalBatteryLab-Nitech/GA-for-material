@@ -3,8 +3,8 @@
 Authors: Yumika YOKOYAMA, Tsubasa KOYAMA, Masanobu NAKAYAMA (Nagoya Institute of Technology)
 
 ## Change log
-Aug. 2024   v1.0.0 
-Feb. 2025   v2.0.0  Add GAML feature 
+Aug. 2024   v1.0.0 <br>
+Feb. 2025   v2.0.0  Add GAML feature <br>
 
 ## Purpose
 A program designed to optimize the atomic arrangement for partially substituted sites in given host structure, mainly for inorganic crystalline materials. In defective or nonstoichiometric compounds, the stability of the system can vary depending on the arrangement of atoms or defects. This program uses a genetic algorithm to search for the most stable arrangement by reducing the total energy of the system. Additionally, it can be applied to systems beyond crystalline inorganic solid materials if appropriate input is provided. Moreover, the target properties for optimization can include factors other than the system's energy.   

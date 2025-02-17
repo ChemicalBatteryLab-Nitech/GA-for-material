@@ -35,7 +35,6 @@ pwd = os.getcwd()
 mode select
 
 """
-select_mode = "ranking" #tournament, roulet, ranking
 print_generate_status = True
 rdfmode = "vasp" #"vasp" or "ase"
 # calc_loop = 2
@@ -76,6 +75,7 @@ try:
 except:
     RESTART = False
 ELEMENT_FIX = inp_ga.ELEMENT_FIX
+select_mode = inp_ga.select_mode
 tmp_gene = inp_ga.temp_gene
 ncore = inp_ga.ncore
 eval_file = inp_ga.eval_file

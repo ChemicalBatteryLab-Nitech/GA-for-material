@@ -1,4 +1,4 @@
-# Genetic Algolithm for mAterial (GmAte_ML.py)
+# Genetic Algolithm for mAterial (GmAte.py)
 
 Authors: Yumika YOKOYAMA, Tsubasa KOYAMA, Masanobu NAKAYAMA (Nagoya Institute of Technology)
 
@@ -135,13 +135,13 @@ GAML consists of six steps, including the four previously mentioned steps and th
   - Copy optm3g.py in "Specific" folder  
 
 **Execute GA**  
-* $python GmAte_ML.py -ga  
+* $python GmAte.py -ga  
     for optimization of element arrangement  
 &nbsp;  
-* $python GmAte_ML.py -bestgene out.value_indiv (Arg1) (Arg2)  
+* $python GmAte.py -bestgene out.value_indiv (Arg1) (Arg2)  
     After the GA optiization is completed, extract GA selected POSCAR files from the top (Arg1)th to (Arg2)th and save POSCAR files in a directory for each   
 &nbsp;   
-* $python GmAte_ML.py -gene2pos (Arg1) (Arg2)     
+* $python GmAte.py -gene2pos (Arg1) (Arg2)     
     POSCAR is created from the gene by reading the (Arg2) gene information file in the directory specified by (Arg1).    
 &nbsp;   
 * $python calc_energy.py -gene2pos   

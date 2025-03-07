@@ -179,6 +179,8 @@ GAML consists of six steps, including the four previously mentioned steps and th
 This software is released under the MIT License, see the LICENSE.  
 **Citing**  
 M. Nakayama, K. Nishii, K. Watanabe, N. Tanibata, H. Takeda, T. Itoh, T. Asaka, "First-principles study of the morphology and surface structure of LaCoO3 and La0.5Sr0.5Fe0.5Co0.5O3 perovskites as air electrodes for solid oxide fuel cells", Sci. Technol. Adv. Mater.: Methods, 1, 24-33 (2021)  [DOI:10.1080/27660400.2021.1909871 ](https://doi.org/10.1080/27660400.2021.1909871)
+Tsubasa Koyama, Yumika Yokoyama, Naoto Tanibata, Hayami Takeda, Masanobu Nakayama, "Efficient Optimization of Atom/Ion Arrangements in Crystalline Solids Using Genetic Algorithms and Machine-Learning Regression", J. Ceram. Soc. Jpn. in press (2025), https://doi.org/10.2109/jcersj2.25006 <BR>
+
 
 ## Funding
 Grants-in-Aid for Scientific Research (nos. 19H05815, 20H02436), MEXT, Japan  for v1.0.0 <BR>

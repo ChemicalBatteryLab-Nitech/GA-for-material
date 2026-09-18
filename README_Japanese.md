@@ -147,7 +147,7 @@ GA-for-material/
     | テンプレートフォルダ | エンジン |
     |---|---|
     | `example/Specific_mace/` | MACE（ASE ベース汎用 NNP） |
-    | `example/Specific_m3gnet/` | M3GNet（Specific/optm3g.py を使用） |
+    | `example/Specific_m3gnet/` | M3GNet（自己完結型、追加ファイル不要） |
     | `example/Specific_chgnet/` | CHGNet（Materials Project 汎用 NNP） |
     | `example/Specific_matlantis/` | Matlantis / LightPFP |
     | `example/Specific_vasp/` | VASP（第一原理計算、HPC クラスタ向け） |
@@ -231,37 +231,6 @@ GA-for-material/
 * python GmAte_ML.py -bestgene out.value_indiv (Arg1) (Arg2)  
     GA最適化が完了した後、GAで選択されたPOSCARファイルを、(Arg1)番目から(Arg2)番目まで抽出し、それぞれのPOSCARファイルがディレクトリに保存される。
 &nbsp;  
-* python calc_energy.py -gene2pos   
-    temp_gene, POSCA_org, inp_POSCAR.pyがあるディレクトリで実行すると、temp_geneの中にある染色体（inp.params形式）を読み取ってPOSCARを作成する。
-    Save_infoやout.value_indivに遺伝子配列は保存されています。 
-&nbsp;       
-
-## Exampleについて    
-* LSCF_M3GNet  
-    La38Sr26Co13Fe51O192の(La, Sr)サイト、(Co, Fe)サイトについて最適化を行ったもの  
-    calc_energy.pyでm3g.pyを起動させることで、M3GNetによる計算を行っています。
-    ※現在、m3g.pyはGithubに載せていません。  
-    La, Sr, Co, Feの数は固定しています。  
-&nbsp;      
-* LSCF_nofix_M3GNet  
-    (La, Sr)64(Co, Fe)64O192の(La, Sr)サイト、(Co, Fe)サイトについて最適化を行ったもの  
-    m3gnetを使用して計算を行っています。
-    (La, Sr), (Co, Fe)の比率は固定していません。  
-&nbsp;
-* LiAlO2_import_M3GNet
-    LiAlO2のカチオンサイトの最適化を行ったもの
-    Specific/optm3g.pyを用いてM3GNetによる計算を行っています。
-    importが一度で済むため計算速くなります。
-&nbsp;
-* LiCoO2_GAML
-    LiCoO2のカチオンサイトをGAMLを用いて最適化を行ったもの
-    ランダムフォレストを用いた機械学習予測によって、一部の遺伝子を導入している。
-&nbsp;
-* LaSrGa3O7_GAML
-    La1.5Sr0.5Ga3O7.25のLa/SrサイトをGAMLを用いて最適化を行ったもの
-    ランダムフォレストを用いた機械学習予測によって、一部の遺伝子を導入している。
-      
-    
 
 ## ライセンス、引用について (License, Citing)
 **ライセンス(About License)**  

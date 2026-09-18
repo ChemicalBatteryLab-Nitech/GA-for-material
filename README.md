@@ -142,7 +142,7 @@ GA-for-material/
     | Template folder | Engine |
     |---|---|
     | `example/Specific_mace/` | MACE (ASE-based universal NNP) |
-    | `example/Specific_m3gnet/` | M3GNet (wraps Specific/optm3g.py) |
+    | `example/Specific_m3gnet/` | M3GNet (self-contained, no extra files needed) |
     | `example/Specific_chgnet/` | CHGNet (Materials Project universal NNP) |
     | `example/Specific_matlantis/` | Matlantis / LightPFP |
     | `example/Specific_vasp/` | VASP (first-principles, HPC/cluster) |
@@ -230,36 +230,7 @@ GA-for-material/
 &nbsp;   
 * $python GmAte.py -gene2pos (Arg1) (Arg2)     
     POSCAR is created from the gene by reading the (Arg2) gene information file in the directory specified by (Arg1).    
-&nbsp;   
-* $python calc_energy.py -gene2pos   
-    When executed in a directory containing temp_gene, POSCAR_org, and inp_POSCAR.py, the program reads the chromosomes from temp_gene (inp.params formatted) and generates POSCAR files.
-    The chromosome sequences are saved in Save_info and out.value_indiv. 
 &nbsp;      
-
-## About an example folder   
-* LSCF_M3GNet  
-   This refers to the optimization of the (La, Sr) sites and (Co, Fe) sites in La38Sr26Co13Fe51O192.  
-   Calculations are performed using M3GNet by running `m3g.py` through `calc_energy.py`.  
-   *Note: Currently, `m3g.py` is not available on Github.  
-   The numbers of La, Sr, Co, and Fe are fixed.
-&nbsp;      
-* LSCF_nofix_M3GNet  
-   This refers to the optimization of the (La, Sr) sites and (Co, Fe) sites in (La, Sr)64(Co, Fe)64O192.  
-   Calculations are performed using M3GNet.  
-   The ratios of (La, Sr) and (Co, Fe) are not fixed.
-&nbsp;
-* LiAlO2_import_M3GNet  
-   This refers to the optimization of the cation sites in LiAlO2.  
-   Calculations are performed using M3GNet with Specific/optm3g.py.  
-   The computation is faster because the import process is done only once.
-&nbsp;
-* LiCoO2_GAML
-    Optimization of cation sites in LiCoO2 using GAML.
-    Some genes are introduced through machine learning predictions using Random Forest.
-&nbsp;
-* LaSrGa3O7_GAML
-    Optimization of La/Sr sites in La1.5Sr0.5Ga3O7.25 using GAML.
-    Some genes are introduced through machine learning predictions using Random Forest.
 
 ## License, Citing
 **About License**  
